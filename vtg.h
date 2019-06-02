@@ -9,9 +9,10 @@
 #include <iostream>
 #include <string>
 #include <assert.h>
+#include <vector>
 using namespace std;
 
-#define KEY 420257961 	/* eindeutiger Key z.B. Matrikelnummer */
+#define KEY 420257933	/* eindeutiger Key z.B. Matrikelnummer */
 #define PERM 0660
 
 #define MAX_DATA 255
