@@ -16,17 +16,15 @@ void display(vector<vector<char> > grid){
 
    }
    const char * grid_msg = grid_string.c_str();
-   cout << "grid_msg[9]:"<< grid_msg[9] <<endl; 
-   cout << grid_string << endl;
 
 
 
 
-  /* create the FIFO (named pipe) */
+
   mkfifo(myfifo, 0666);
 
 
-  /* write "Hi" to the FIFO */
+
   fd = open(myfifo, O_WRONLY);
 
   write(fd, grid_msg, 10000);
@@ -43,6 +41,12 @@ int main(int argc, char* argv[]){
    message_t msg;	/* Buffer fuer Message */
    int msgid = -1, c = 0, width = 0, height = 0;
    bool carArray[26] = {0};
+   vector< pair<int,int> > car_Array;
+
+   for (int i = 0; i < 26; i++){
+    car_Array.push_back( pair<int,int>(-1,-1));
+   }
+
    /* Message Queue neu anlegen */
    if( (msgid = msgget(KEY,PERM | IPC_CREAT | IPC_EXCL ))==-1 )   //1. eindeutige Kennung 2. Flags, Bitweise mit oder verknüpft
    {
@@ -124,7 +128,8 @@ print out grid
            }while(grid[randX][randY] != ' ');
            //an der stelle fuegen wir jetzt das auto ein
           grid[randX][randY] = msg.mText[0];
-
+          car_Array[spot-1] = pair<int,int>(randX,randY);
+          cout <<"Assigned Pos:"<< car_Array[spot-1].first<< car_Array[spot-1].second << endl;
           strncpy(msg.mText,"Auto initialisiert.",MAX_DATA);
 
          }
@@ -139,6 +144,11 @@ print out grid
         switch(msg.mText[0]){
           case 78:
             cout << msg.mText[0] << endl;
+            cout << grid[car_Array[msg.mType-1].first][car_Array[msg.mType-1].second] << endl;
+            /*if(grid[car_Array[msg.mType-1].first-1][car_Array[msg.mType-1].second]==' '){
+               grid[car_Array[msg.mType-1].first-1][car_Array[msg.mType-1].second] = grid[car_Array[msg.mType-1].first][car_Array[msg.mType-1].second];
+               grid[car_Array[msg.mType-1].first][car_Array[msg.mType-1].second] = ' ';
+            }*/
             break;
           case 79:
             cout << msg.mText[0] << endl;
