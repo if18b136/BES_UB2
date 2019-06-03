@@ -128,8 +128,7 @@ print out grid
            }while(grid[randX][randY] != ' ');
            //an der stelle fuegen wir jetzt das auto ein
           grid[randX][randY] = msg.mText[0];
-          car_Array[spot-1] = pair<int,int>(randX,randY);
-          cout <<"Assigned Pos:"<< car_Array[spot-1].first<< car_Array[spot-1].second << endl;
+          car_Array[spot] = pair<int,int>(randX,randY);
           strncpy(msg.mText,"Auto initialisiert.",MAX_DATA);
 
          }
@@ -140,24 +139,122 @@ print out grid
                return EXIT_FAILURE;
          }
       }
-      else if(msg.mType >= 1 && msg.mType <= 26){
+      else if(msg.mType >= 1 && msg.mType <= 26 && carArray[msg.mType-1] == true){
         switch(msg.mText[0]){
           case 78:
-            cout << msg.mText[0] << endl;
+            /*cout << msg.mText[0] << endl;
             cout << grid[car_Array[msg.mType-1].first][car_Array[msg.mType-1].second] << endl;
-            /*if(grid[car_Array[msg.mType-1].first-1][car_Array[msg.mType-1].second]==' '){
+            cout << msg.mType-1 << endl;
+            cout << car_Array[0].first << car_Array[0].second <<endl;*/
+            if(grid[car_Array[msg.mType-1].first-1][car_Array[msg.mType-1].second]==' '){
                grid[car_Array[msg.mType-1].first-1][car_Array[msg.mType-1].second] = grid[car_Array[msg.mType-1].first][car_Array[msg.mType-1].second];
                grid[car_Array[msg.mType-1].first][car_Array[msg.mType-1].second] = ' ';
-            }*/
+               car_Array[msg.mType-1].first--;
+            }
+            else if(grid[car_Array[msg.mType-1].first-1][car_Array[msg.mType-1].second]=='#'){
+              grid[car_Array[msg.mType-1].first][car_Array[msg.mType-1].second]=' ';
+              car_Array[msg.mType-1].first = -1;
+              car_Array[msg.mType-1].second = -1;
+              carArray[msg.mType-1] = false;
+            }
+            else{
+              int collider = (int)grid[car_Array[msg.mType-1].first-1][car_Array[msg.mType-1].second];
+              collider -= 65;
+              
+              grid[car_Array[collider].first][car_Array[collider].second]=' ';
+              car_Array[collider].first = -1;
+              car_Array[collider].second = -1;
+              carArray[collider] = false;
+
+              grid[car_Array[msg.mType-1].first][car_Array[msg.mType-1].second]=' ';
+              car_Array[msg.mType-1].first = -1;
+              car_Array[msg.mType-1].second = -1;
+              carArray[msg.mType-1] = false;
+            }
             break;
           case 79:
             cout << msg.mText[0] << endl;
-            break;
-          case 87:
-            cout << msg.mText[0] << endl;
+            if(grid[car_Array[msg.mType-1].first][car_Array[msg.mType-1].second+1]==' '){
+               grid[car_Array[msg.mType-1].first][car_Array[msg.mType-1].second+1] = grid[car_Array[msg.mType-1].first][car_Array[msg.mType-1].second];
+               grid[car_Array[msg.mType-1].first][car_Array[msg.mType-1].second] = ' ';
+               car_Array[msg.mType-1].second++;
+            }
+            else if(grid[car_Array[msg.mType-1].first][car_Array[msg.mType-1].second+1]=='#'){
+              grid[car_Array[msg.mType-1].first][car_Array[msg.mType-1].second]=' ';
+              car_Array[msg.mType-1].first = -1;
+              car_Array[msg.mType-1].second = -1;
+              carArray[msg.mType-1] = false;
+            }
+            else{
+              int collider = (int)grid[car_Array[msg.mType-1].first][car_Array[msg.mType-1].second+1];
+              collider -= 65;
+              
+              grid[car_Array[collider].first][car_Array[collider].second]=' ';
+              car_Array[collider].first = -1;
+              car_Array[collider].second = -1;
+              carArray[collider] = false;
+
+              grid[car_Array[msg.mType-1].first][car_Array[msg.mType-1].second]=' ';
+              car_Array[msg.mType-1].first = -1;
+              car_Array[msg.mType-1].second = -1;
+              carArray[msg.mType-1] = false;
+            }
             break;
           case 83:
             cout << msg.mText[0] << endl;
+            if(grid[car_Array[msg.mType-1].first+1][car_Array[msg.mType-1].second]==' '){
+               grid[car_Array[msg.mType-1].first+1][car_Array[msg.mType-1].second] = grid[car_Array[msg.mType-1].first][car_Array[msg.mType-1].second];
+               grid[car_Array[msg.mType-1].first][car_Array[msg.mType-1].second] = ' ';
+               car_Array[msg.mType-1].first++;
+            }
+            else if(grid[car_Array[msg.mType-1].first+1][car_Array[msg.mType-1].second]=='#'){
+              grid[car_Array[msg.mType-1].first][car_Array[msg.mType-1].second]=' ';
+              car_Array[msg.mType-1].first = -1;
+              car_Array[msg.mType-1].second = -1;
+              carArray[msg.mType-1] = false;
+            }
+            else{
+              int collider = (int)grid[car_Array[msg.mType-1].first+1][car_Array[msg.mType-1].second];
+              collider -= 65;
+              
+              grid[car_Array[collider].first][car_Array[collider].second]=' ';
+              car_Array[collider].first = -1;
+              car_Array[collider].second = -1;
+              carArray[collider] = false;
+
+              grid[car_Array[msg.mType-1].first][car_Array[msg.mType-1].second]=' ';
+              car_Array[msg.mType-1].first = -1;
+              car_Array[msg.mType-1].second = -1;
+              carArray[msg.mType-1] = false;
+            }
+            break;
+          case 87:
+            cout << msg.mText[0] << endl;
+            if(grid[car_Array[msg.mType-1].first][car_Array[msg.mType-1].second-1]==' '){
+               grid[car_Array[msg.mType-1].first][car_Array[msg.mType-1].second-1] = grid[car_Array[msg.mType-1].first][car_Array[msg.mType-1].second];
+               grid[car_Array[msg.mType-1].first][car_Array[msg.mType-1].second] = ' ';
+               car_Array[msg.mType-1].second--;
+            }
+            else if(grid[car_Array[msg.mType-1].first][car_Array[msg.mType-1].second-1]=='#'){
+              grid[car_Array[msg.mType-1].first][car_Array[msg.mType-1].second]=' ';
+              car_Array[msg.mType-1].first = -1;
+              car_Array[msg.mType-1].second = -1;
+              carArray[msg.mType-1] = false;
+            }
+            else{
+              int collider = (int)grid[car_Array[msg.mType-1].first][car_Array[msg.mType-1].second-1];
+              collider -= 65;
+              
+              grid[car_Array[collider].first][car_Array[collider].second]=' ';
+              car_Array[collider].first = -1;
+              car_Array[collider].second = -1;
+              carArray[collider] = false;
+
+              grid[car_Array[msg.mType-1].first][car_Array[msg.mType-1].second]=' ';
+              car_Array[msg.mType-1].first = -1;
+              car_Array[msg.mType-1].second = -1;
+              carArray[msg.mType-1] = false;
+            }
             break;
           default:
             cout << msg.mText[0] << endl;

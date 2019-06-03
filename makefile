@@ -9,5 +9,5 @@ vehicleclient: vehicleclient.cpp
 griddisplay:
 	g++ griddisplay.cpp -o griddisplay
 
-clean: gridserver.cpp vehicleclient.cpp
+clean: gridserver.cpp vehicleclient.cpp griddisplay.cpp
 			rm -f gridserver vehicleclient griddisplay
