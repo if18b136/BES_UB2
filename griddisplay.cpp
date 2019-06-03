@@ -12,9 +12,9 @@ int main()
     	/* open, read, and display the message from the FIFO */
     	fd = open(myfifo, O_RDONLY);
     	read(fd, buf, MAX_BUF);
-    	printf("Received: %s\n", buf);
+    	printf("%s\n", buf);
     	close(fd);
-    	usleep(100000);
+    	usleep(200000);
 	}
 
     return 0;

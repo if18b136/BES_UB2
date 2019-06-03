@@ -3,13 +3,33 @@
 void display(vector<vector<char> > grid){
   int fd;
   char * myfifo = "/tmp/myfifo";
+  string grid_string = "";
+
+
+   for(int i =0 ; i< grid.size();i++)
+   {
+      for(int j =0 ;j<grid[i].size();j++)
+      {
+          grid_string += grid[i][j];
+      }
+      grid_string += "\n";
+
+   }
+   const char * grid_msg = grid_string.c_str();
+   cout << "grid_msg[9]:"<< grid_msg[9] <<endl; 
+   cout << grid_string << endl;
+
+
+
 
   /* create the FIFO (named pipe) */
   mkfifo(myfifo, 0666);
 
+
   /* write "Hi" to the FIFO */
   fd = open(myfifo, O_WRONLY);
-  write(fd, "Hi", sizeof("Hi"));
+
+  write(fd, grid_msg, 10000);
   close(fd);
 
   /* remove the FIFO */
@@ -104,14 +124,6 @@ print out grid
            }while(grid[randX][randY] != ' ');
            //an der stelle fuegen wir jetzt das auto ein
           grid[randX][randY] = msg.mText[0];
-          cout << grid[randX][randY];
-
-          for(int columns = 0; columns< grid.size(); columns++){
-            for (int rows = 0; rows < grid[columns].size(); rows++){
-              cout << grid[columns][rows];
-            }
-            cout << endl;
-          }
 
           strncpy(msg.mText,"Auto initialisiert.",MAX_DATA);
 
