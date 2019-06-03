@@ -1,5 +1,23 @@
 #include "vtg.h"
 
+void display(vector<vector<char> > grid){
+  int fd;
+  char * myfifo = "/tmp/myfifo";
+
+  /* create the FIFO (named pipe) */
+  mkfifo(myfifo, 0666);
+
+  /* write "Hi" to the FIFO */
+  fd = open(myfifo, O_WRONLY);
+  write(fd, "Hi", sizeof("Hi"));
+  close(fd);
+
+  /* remove the FIFO */
+  unlink(myfifo);
+
+}
+
+
 int main(int argc, char* argv[]){
    srand(time(0));
    message_t msg;	/* Buffer fuer Message */
@@ -124,6 +142,7 @@ print out grid
             break;
         }
       }
+      display(grid);
    }
    return EXIT_SUCCESS;
 }

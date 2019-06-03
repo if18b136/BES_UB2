@@ -3,6 +3,8 @@
 #include <string.h>
 #include <signal.h>
 #include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h> 
 #include <sys/ipc.h>
 #include <sys/msg.h>
 #include <unistd.h>
@@ -12,7 +14,7 @@
 #include <vector>
 using namespace std;
 
-#define KEY 420257933	/* eindeutiger Key z.B. Matrikelnummer */
+#define KEY 420257921	/* eindeutiger Key z.B. Matrikelnummer */
 #define PERM 0660
 
 #define MAX_DATA 255

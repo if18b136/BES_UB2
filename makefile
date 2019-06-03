@@ -1,4 +1,4 @@
-all: gridserver vehicleclient #griddisplay
+all: gridserver vehicleclient griddisplay
 
 gridserver: gridserver.cpp
 	g++ gridserver.cpp -o gridserver
@@ -6,8 +6,8 @@ gridserver: gridserver.cpp
 vehicleclient: vehicleclient.cpp
 	g++ vehicleclient.cpp -o vehicleclient
 
-#griddisplay:
-#	g++ griddisplay.cpp -o griddisplay
+griddisplay:
+	g++ griddisplay.cpp -o griddisplay
 
 clean: gridserver.cpp vehicleclient.cpp
-			rm -f gridserver vehicleclient
+			rm -f gridserver vehicleclient griddisplay
