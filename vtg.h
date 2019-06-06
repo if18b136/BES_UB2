@@ -16,7 +16,7 @@
 #include <vector>
 using namespace std;
 
-#define KEY 420257884	/* eindeutiger Key z.B. Matrikelnummer */
+#define KEY 420257882	/* eindeutiger Key z.B. Matrikelnummer */
 #define PERM 0660
 
 #define MAX_DATA 255

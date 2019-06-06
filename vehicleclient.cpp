@@ -43,12 +43,17 @@ int main(int argc, char* argv[]){
                 char dir;
                 cout << "Enter Move: ";
                 cin  >> dir;
+
                 msg.mText[0] = dir;   //erste stelle der message wird auf himmelsrichtung gesetzt
                 msg.mType = kfz;    //ab jetzt wird nur noch ueber Autonamen als integer gesendet/empfangen
                 if (msgsnd(msgid,&msg,sizeof(msg)-sizeof(long), 0) == -1){    //message wird gesendet
                       /* error handling */
                       fprintf(stderr,"%s: Can't send message\n",argv[0]);
                       return EXIT_FAILURE;
+                }
+                if(dir == 'T'){
+                  cout << "Prozess wird beendet.." << endl;
+                  return EXIT_SUCCESS;
                 }
             }
           }

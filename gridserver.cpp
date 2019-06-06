@@ -147,7 +147,6 @@ int main(int argc, char* argv[]){
           }
           break;
         case 79:    //=Osten
-          cout << msg.mText[0] << endl;
           if(grid[car_Array[msg.mType-1].first][car_Array[msg.mType-1].second+1]==' '){
              grid[car_Array[msg.mType-1].first][car_Array[msg.mType-1].second+1] = grid[car_Array[msg.mType-1].first][car_Array[msg.mType-1].second];
              grid[car_Array[msg.mType-1].first][car_Array[msg.mType-1].second] = ' ';
@@ -175,8 +174,7 @@ int main(int argc, char* argv[]){
           }
           break;
         case 83:    //=Sueden
-          cout << msg.mText[0] << endl;
-          if(grid[car_Array[msg.mType-1].first+1][car_Array[msg.mType-1].second]==' '){
+             if(grid[car_Array[msg.mType-1].first+1][car_Array[msg.mType-1].second]==' '){
              grid[car_Array[msg.mType-1].first+1][car_Array[msg.mType-1].second] = grid[car_Array[msg.mType-1].first][car_Array[msg.mType-1].second];
              grid[car_Array[msg.mType-1].first][car_Array[msg.mType-1].second] = ' ';
              car_Array[msg.mType-1].first++;
@@ -203,7 +201,6 @@ int main(int argc, char* argv[]){
           }
           break;
         case 87:    //=Westen
-          cout << msg.mText[0] << endl;
           if(grid[car_Array[msg.mType-1].first][car_Array[msg.mType-1].second-1]==' '){
              grid[car_Array[msg.mType-1].first][car_Array[msg.mType-1].second-1] = grid[car_Array[msg.mType-1].first][car_Array[msg.mType-1].second];
              grid[car_Array[msg.mType-1].first][car_Array[msg.mType-1].second] = ' ';
