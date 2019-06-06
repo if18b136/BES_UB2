@@ -230,6 +230,12 @@ int main(int argc, char* argv[]){
             carArray[msg.mType-1] = false;
           }
           break;
+        case 84:    //=Terminate
+          grid[car_Array[msg.mType-1].first][car_Array[msg.mType-1].second]=' ';
+          car_Array[msg.mType-1].first = -1;
+          car_Array[msg.mType-1].second = -1;
+          carArray[msg.mType-1] = false;
+
         default:
           cout << msg.mText[0] << endl;
           break;
