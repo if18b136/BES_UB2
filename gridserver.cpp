@@ -235,7 +235,7 @@ int main(int argc, char* argv[]){
           car_Array[msg.mType-1].first = -1;
           car_Array[msg.mType-1].second = -1;
           carArray[msg.mType-1] = false;
-
+          break;
         default:
           cout << msg.mText[0] << endl;
           break;
