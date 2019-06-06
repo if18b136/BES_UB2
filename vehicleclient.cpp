@@ -1,9 +1,9 @@
 #include "vtg.h"
 
 int main(int argc, char* argv[]){
-   message_t msg;	/* Buffer fuer Message */
-   int msgid = -1;	/* Message Queue ID */
-   int kfz = (int)argv[1][0] - 64;
+   message_t msg;	  //Buffer fuer Message
+   int msgid = -1;	 //Message Queue ID 
+   int kfz = (int)argv[1][0] - 64;    //Autoname wird in integer verwandelt
    /* Argument Handling */
    if (argc!=2){
       fprintf(stderr,"Usage: %s <Message>\n",argv[0]);
@@ -18,51 +18,38 @@ int main(int argc, char* argv[]){
    }
 
    /* Nachricht verschicken */
-   msg.mType=100;
-   msg.mPID=getpid();
+   msg.mType=100;   //Anfangs wird auf 100 gesendet um sich als neuer client erkennen zu lassen
+   msg.mPID=getpid();   //zum Ruecksenden wird eigene PID mitgeschickt
    strncpy(msg.mText,argv[1],MAX_DATA);      //überprüft wieviele Param erlaubt sind
-   if (msgsnd(msgid,&msg,sizeof(msg)-sizeof(long), 0) == -1){
+   if (msgsnd(msgid,&msg,sizeof(msg)-sizeof(long), 0) == -1){   //gewuenschter Buchstabe wird auf Kanal 100 an Server gesendet
          /* error handling */
          fprintf(stderr,"%s: Can't send message\n",argv[0]);
          return EXIT_FAILURE;
    }
    while (1){
-      if (msgrcv(msgid,&msg,sizeof(msg)-sizeof(long), (int)getpid() , 0) == -1){
+      if (msgrcv(msgid,&msg,sizeof(msg)-sizeof(long), (int)getpid() , 0) == -1){    //wartet auf antwort ob Auto erstellt
          fprintf(stderr,"%s: Can't receive from message queue\n",argv[0]);
          return EXIT_FAILURE;
       }
-      else{
-        if(msg.mType == (int)getpid()){
-          cout << msg.mText << endl;
-          int comp = strcmp(msg.mText, "Auto bereits vergeben");
+      else{   
+        if(msg.mType == (int)getpid()){   //Wenn Erstellungsantwort von Server (unter unserer PID) kommt
+          cout << msg.mText << endl;    //message des servers wird geprintet
+          int comp = strcmp(msg.mText, "Auto bereits vergeben");    //Abfrage ob Auto bereits vergeben
           if(comp == 0){
             return EXIT_SUCCESS;
           }
-          else{
-            while(1){
+          else{   //Auto wurde erstellt
+            while(1){   //Jetzt nur noch Richtungsinput
                 char dir;
                 cout << "Enter Move: ";
                 cin  >> dir;
-                /*
-                if (msgrcv(msgid,&msg,sizeof(msg)-sizeof(long), kfz, 0) == -1){
-                  fprintf(stderr,"%s: Can't receive from message queue\n",argv[0]);
-                  return EXIT_FAILURE;
+                msg.mText[0] = dir;   //erste stelle der message wird auf himmelsrichtung gesetzt
+                msg.mType = kfz;    //ab jetzt wird nur noch ueber Autonamen als integer gesendet/empfangen
+                if (msgsnd(msgid,&msg,sizeof(msg)-sizeof(long), 0) == -1){    //message wird gesendet
+                      /* error handling */
+                      fprintf(stderr,"%s: Can't send message\n",argv[0]);
+                      return EXIT_FAILURE;
                 }
-                else {
-                  int d_car = strcmp(msg.mText, "Vehicle has been eliminated.");
-                  if (d_car = 0){
-                    cout <<  "Vehicle has been eliminated." << endl;
-                    return EXIT_SUCCESS;
-                  }
-                }
-                  */
-                  msg.mText[0] = dir;
-                  msg.mType = kfz;
-                  if (msgsnd(msgid,&msg,sizeof(msg)-sizeof(long), 0) == -1){
-                        /* error handling */
-                        fprintf(stderr,"%s: Can't send message\n",argv[0]);
-                        return EXIT_FAILURE;
-                  }
             }
           }
         }

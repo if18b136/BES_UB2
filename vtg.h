@@ -21,10 +21,10 @@ using namespace std;
 
 #define MAX_DATA 255
 
-typedef struct
+typedef struct 		//struct einer message
 {
 	long mType;		//braucht immer long als typfeld/priority. Später danach filtern um fahrzeuge zu unterscheiden(1-26 reincoderien)
 	char mText[MAX_DATA];		//meistens Text, aber auch alle anderen Werte möglich
-	int mPID;
+	int mPID;		//Zur Identifikation bevor ein Buchstabe zugeteilt ist notwendig
 
 } message_t;
